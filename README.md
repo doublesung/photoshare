@@ -1,24 +1,7 @@
-# photoshare
+# Photoshare
 
-## Project setup
-```
-npm install
-```
+## 專案說明
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+「Photoshare」，是一個高質免費圖庫，採用前端技術為 Vue cli，圖源為串接第三方 Pexels API，並搭配 JSON Server 模擬 Restful API 進行開發。
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+[DEMO](https://doublesung.github.io/photoshare/)
