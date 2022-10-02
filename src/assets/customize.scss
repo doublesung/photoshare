@@ -1,13 +1,14 @@
 // 客製化 bootstrap 5
+
 // 必須引入
 @import '../../node_modules/bootstrap/scss/functions';
 
-// $body-color: #5b6067;
-// $link-color: #5b6067;
-$primary: #5b6067;
-// $link-hover-color: #3463ac;
-$link-shade-percentage: 80%;
-// $secondary: #212529;
+// 自定義變亮
+$primary: #6e6d7a;
+$secondary: #407bff;
+$link-shade-percentage: 30%;
+$modal-content-border-width: 0;
+
 @import '../../node_modules/bootstrap/scss/variables';
 @import '../../node_modules/bootstrap/scss/mixins';
 
@@ -19,7 +20,6 @@ $link-shade-percentage: 80%;
 @import '../../node_modules/bootstrap/scss/images';
 @import '../../node_modules/bootstrap/scss/containers';
 @import '../../node_modules/bootstrap/scss/grid';
-@import '../../node_modules/bootstrap/scss/tables';
 @import '../../node_modules/bootstrap/scss/forms';
 @import '../../node_modules/bootstrap/scss/buttons';
 @import '../../node_modules/bootstrap/scss/transitions';
@@ -27,45 +27,66 @@ $link-shade-percentage: 80%;
 @import '../../node_modules/bootstrap/scss/nav';
 @import '../../node_modules/bootstrap/scss/navbar';
 @import '../../node_modules/bootstrap/scss/card';
-@import '../../node_modules/bootstrap/scss/accordion';
-@import '../../node_modules/bootstrap/scss/breadcrumb';
-@import '../../node_modules/bootstrap/scss/pagination';
-@import '../../node_modules/bootstrap/scss/badge';
-@import '../../node_modules/bootstrap/scss/alert';
-@import '../../node_modules/bootstrap/scss/progress';
-@import '../../node_modules/bootstrap/scss/list-group';
 @import '../../node_modules/bootstrap/scss/close';
 @import '../../node_modules/bootstrap/scss/toasts';
-@import '../../node_modules/bootstrap/scss/close';
 @import '../../node_modules/bootstrap/scss/modal';
-@import '../../node_modules/bootstrap/scss/tooltip';
-@import '../../node_modules/bootstrap/scss/popover';
-@import '../../node_modules/bootstrap/scss/carousel';
 @import '../../node_modules/bootstrap/scss/spinners';
-@import '../../node_modules/bootstrap/scss/offcanvas';
-@import '../../node_modules/bootstrap/scss/placeholders';
-
 
 @import '../../node_modules/bootstrap/scss/utilities';
+
 // 自定義的 utilites
 $utilities: map-merge(
   $utilities,
   (
-    "my-color": (
-      property: color,
-      class: text,
-      local-vars: (
-        "text-opacity": 1
-      ),
-      values: map-merge(
-        $utilities-text-colors,
-        (
-          "active": #3463ac,
-        )
+    "my-padding-top": (
+      responsive: true,
+      property: padding-top,
+      class: pt,
+      values: (
+        6: $spacer * 6,
+        7: $spacer * 9
       )
+    ),
+    "my-height": (
+      property: height,
+      class: h,
+      values: (
+        80: 80%, 
+      )
+    ),
+    "my-width": (
+      property: width,
+      class: w,
+      responsive: true,
+      values: (
+        100: 100%,
+        auto: auto
+      )
+    ),
+    "my-min-width": (
+      property: min-width,
+      class: min-w,
+      responsive: true,
+      values: (
+        80: 80%,
+        100: 100%
+      )
+    ),
+    "my-margin": (
+      responsive: true,
+      property: margin,
+      class: mn,
+      values: (
+        2: $spacer * -0.5,
+        3: $spacer * -1,
+      )
+    ),
+    "my-position": (
+      property: position,
+      responsive: true,
+      values: static relative absolute fixed sticky
     ),
   )
 );
-
 
 @import '../../node_modules/bootstrap/scss/utilities/api';

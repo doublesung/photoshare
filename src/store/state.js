@@ -1,4 +1,18 @@
 export default {
-  photos: [],
-  yes: '123'
+  page: '',
+  totalResult: '',
+
+  newMedia: [],
+  medium: {},
+
+  collections: [],
+  collection: {},
+
+  searchValue: '',
+  searchRecords: [],
+
+  featuredCollections: [],
+
+  photoCover: '',
+  videoCover: ''
 }

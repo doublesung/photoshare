@@ -3,17 +3,41 @@ import VueRouter from 'vue-router'
 
 Vue.use(VueRouter)
 
-import Home from '../pages/Home'
+import Photos from '../pages/Photos'
+import Videos from '../pages/Videos'
+import Search from '../pages/Search'
+import Collections from '../pages/Collections'
+import Collection from '../pages/Collection'
 
 export default new VueRouter({
   routes:[
     {
       path: '/',
-      redirect: '/home'   
+      redirect: '/photos'   
     },
     {
-      path: '/home',
-      component: Home
+      path: '/photos',
+      component: Photos,  
+    },
+    {
+      path: '/videos',
+      component: Videos
+    },
+    {
+      path: '/search/:query',
+      component: Search
+    },
+    {
+      path: '/search/video/:query',
+      component: Search
+    },
+    {
+      path: '/collections',
+      component: Collections,
+    },
+    {
+      path: '/collections/:collectionName',
+      component: Collection
     }
   ]
 })

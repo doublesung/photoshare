@@ -1,18 +1,20 @@
 <template>
   <div id="app">
-    <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <router-view></router-view>
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <Navbar/>
+    <router-view class="min-vh-100"></router-view>
+    <Footer/>
   </div>
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
+import Navbar from '../src/components/Navbar.vue'
+import Footer from '../src/components/Footer.vue'
 
 export default {
   name: 'App',
   components: {
-    // HelloWorld
+    Navbar,
+    Footer
   }
 }
 </script>
@@ -20,7 +22,6 @@ export default {
 <style lang='scss'>
 @import "./assets/customize.scss";
 
-// @import "./assets/reset.css";
 #app {
   font-family: 'Noto Sans TC';
   font-weight: bold;
@@ -28,5 +29,29 @@ export default {
 
 a {
   text-decoration: none;
+  color: $primary;
 }
+
+
+ul {
+  padding: 0;
+  
+  li {
+    list-style-type: none;
+  }
+}
+
+button {
+  background-color: #FFF;
+  transition: .3s ease;
+
+  &:hover {
+    background-color: #efefef;
+  }
+}
+
+.svg-icon {
+  fill: #6e6d7a;
+}
+
 </style>

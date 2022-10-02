@@ -1,0 +1,40 @@
+{
+  "collections": [
+  ],
+  "serchRecords": [
+  ],
+  "photoCovers": [
+    {
+      "id": 1,
+      "photographer": "Jacob Colvin",
+      "url": "https://images.pexels.com/photos/1757363/pexels-photo-1757363.jpeg?auto=compress&crop=center&cs=tinysrgb&fit=crop&h=500&w=3000"
+    },
+    {
+      "id": 2,
+      "photographer": "Rahul Shah",
+      "url": "https://images.pexels.com/photos/840215/pexels-photo-840215.jpeg?auto=compress&crop=center&cs=tinysrgb&fit=crop&h=500&w=3000"
+    },
+    {
+      "id": 3,
+      "photographer": "Asad Photo Maldives",
+      "url": "https://images.pexels.com/photos/457881/pexels-photo-457881.jpeg?auto=compress&crop=center&cs=tinysrgb&fit=crop&h=500&w=3000"
+    }
+  ],
+  "videoCovers": [
+    {
+      "id": 1,
+      "photographer": "Peter Fowler",
+      "url": "https://player.vimeo.com/external/496797033.hd.mp4?s=b87c1e6e87a81a60cdfc9851b3f739c115a23adf&profile_id=170&oauth2_token_id=57447761"
+    },
+    {
+      "id": 2,
+      "photographer": "Enrique Hoyos",
+      "url": "https://player.vimeo.com/external/384761655.hd.mp4?s=5eecd63d94629aa928726912a5601a7577a3ca8a&profile_id=170&oauth2_token_id=57447761"
+    },
+    {
+      "id": 3,
+      "photographer": "Yaroslav Shuraev",
+      "url": "https://player.vimeo.com/external/434045526.hd.mp4?s=20f75bfc99c6577c31e4a530dbc0776ce9ba4c27&profile_id=170&oauth2_token_id=57447761"
+    }
+  ]
+}
