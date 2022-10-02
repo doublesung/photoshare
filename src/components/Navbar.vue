@@ -100,9 +100,7 @@ export default {
       this.$store.dispatch('getSearchRecords')
       this.$store.dispatch('setTotalResult', '')
 
-      // if(!this.$route.path.includes('/search')) {  
-        this.$router.push({path: '/search/' + this.searchValue})
-      // }
+      this.$router.push({path: '/search/' + this.searchValue})
     },
     // 刪除所有搜尋紀錄
     deleteSearchRecords() {
