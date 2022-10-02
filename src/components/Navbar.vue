@@ -21,7 +21,7 @@
           </svg>
         </i>
         <input id="searchInput" class="form-control border-0 shadow-none ps-0" type="text" placeholder="搜尋免費相片" aria-label="Search" autocomplete="off"
-        v-model="searchValue" @keydown.enter="search('')"
+        v-model="searchValue" @keydown.enter="search('input')"
         >
         <!-- 搜尋紀錄與收藏 -->
         <div class="search-form-dropdown w-100 shadow py-3 border-0 rounded-4 position-absolute top-100 bg-white">
@@ -91,8 +91,8 @@ export default {
     search(value) {
       let searchInput = document.getElementById('searchInput')
 
-      // value有值表示是點擊搜尋紀錄
-      if(value) this.searchValue = value
+      // 表示是點擊搜尋紀錄
+      if(value !== 'input') this.searchValue = value
 
       this.findSearchRecord()
       
@@ -100,9 +100,9 @@ export default {
       this.$store.dispatch('getSearchRecords')
       this.$store.dispatch('setTotalResult', '')
 
-      if(!this.$route.path.includes('/search')) {  
+      // if(!this.$route.path.includes('/search')) {  
         this.$router.push({path: '/search/' + this.searchValue})
-      }
+      // }
     },
     // 刪除所有搜尋紀錄
     deleteSearchRecords() {
@@ -143,7 +143,6 @@ export default {
     // 獲取精選收藏
     this.$store.dispatch('getFeaturedCollections', {page: 1, per_page: 8})
   },
-  
 }
 </script>
 

@@ -114,8 +114,11 @@ export default {
     MediaList
   },
   computed: {
-    ...mapState(['searchValue', 'totalResult']),
+    ...mapState(['totalResult']),
 
+    searchQuery() {
+      return this.$route.params.query
+    },
     // 是否路徑為相片
     isPhoto() {
       return !this.$route.path.includes('video')
@@ -145,7 +148,6 @@ export default {
   data() {
     return {
       page: 0,
-      searchQuery: this.$route.params.query,
       filterCondition: {
         orientation: '',
         size: '',
@@ -318,6 +320,7 @@ export default {
     reload() {
       this.page = 0
       this.$refs.mediaList.media = []
+      this.$refs.mediaList.oldMediaLength = 0
 
       let grid = document.querySelector('.grid')
       
@@ -337,6 +340,9 @@ export default {
       }
     },
     isPhoto() {
+      this.reload()
+    },
+    searchQuery() {
       this.reload()
     }
   },

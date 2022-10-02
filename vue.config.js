@@ -1,10 +1,5 @@
 module.exports = {
-  pages: {
-    index: {
-      // entry for the page
-      entry: 'src/main.js'
-    }
-  },
+  publicPath: './',
   devServer: {
     proxy: {
       '/apiDev': {
@@ -13,11 +8,11 @@ module.exports = {
         secure: false,
         pathRewrite: {
           '^/apiDev': ''
-        },
-        logLevel: 'debug'
+        }
       },
       '/api': {
-        target: 'http://localhost:9090',
+        // target: 'http://localhost:9090',
+        target: 'https://my-json-server.typicode.com/doublesung/photoshare',
         changeOrigin: true,
         secure: false,
         pathRewrite: {
@@ -25,13 +20,6 @@ module.exports = {
         }
       }
     }
-  },
-  // css: {
-  //   loaderOptions: {
-  //     sass: {
-  //       prepenData:
-  //     }
-  //   }
-  // }
+  }
 };
 
