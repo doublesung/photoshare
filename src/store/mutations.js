@@ -24,10 +24,8 @@ export default {
     state.featuredCollections = featuredCollections
   },
   RECEIVE_COLLECTION_PEXEL(state, result) {
-    // state.collection.media = result.media
     state.newMedia = result.media
     state.totalResult = result.total_results
-    console.log( result.media)  
   },
   
 
