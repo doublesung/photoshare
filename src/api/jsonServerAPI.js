@@ -1,6 +1,7 @@
 import ajax from './jsonServerAjax'
 
-const baseURL = '/api'
+const baseURL = 'https://my-json-server.typicode.com/doublesung/photoshare'
+// const baseURL = '/api'
 
 // 獲取收藏
 export const reqCollections = () => ajax(baseURL + '/collections')
