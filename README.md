@@ -24,7 +24,7 @@
 
 創建收藏並同時增加圖片到收藏中。
 
-![](https://github.com/doublesung/photoshare/blob/gh-pages/search.gif)
+![](https://github.com/doublesung/photoshare/blob/gh-pages/add-collection.gif)
 
 #### 下載項目
 
@@ -36,7 +36,7 @@
 
 能夠自己建立收藏之外，也可以瀏覽別人建立的精美收藏。
 
-![](https://github.com/doublesung/photoshare/blob/gh-pages/download.gif)
+![](https://github.com/doublesung/photoshare/blob/gh-pages/collection.gif)
 
 ## 專案前端技術
 
