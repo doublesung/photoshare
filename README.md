@@ -57,5 +57,5 @@
 
 #### API
 
-- Pexels : [API文檔連結](https://www.pexels.com/zh-tw/api/documentation/?language=javascript#photos-curated)
+- Pexels : [API文檔連結](https://www.pexels.com/zh-tw/api/documentation/?language=javascript#photos-curated) (每一小時的請求上限為200次，超過會暫時無法請求，還請多多見諒)
 - JSON Server : [API連結](https://my-json-server.typicode.com/doublesung/photoshare)
