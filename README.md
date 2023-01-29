@@ -58,4 +58,4 @@
 #### API
 
 - Pexels : [API文檔連結](https://www.pexels.com/zh-tw/api/documentation/?language=javascript#photos-curated) (每一小時的請求上限為200次，超過會暫時無法請求，還請多多見諒)
-- Firebase Realtime Database 
+- Firebase Realtime Database : 實現收藏功能
