@@ -4,7 +4,7 @@
 
 [作品連結](https://doublesung.github.io/photoshare/)
 
-「Photoshare」，是一個高質免費圖庫，採用前端技術為 Vue Cli，圖源為串接第三方 Pexels API，並搭配 JSON Server 模擬 Restful API 進行開發。
+「Photoshare」，是一個高質免費圖庫，採用前端技術為 Vue Cli，圖源為串接第三方 Pexels API，並搭配 Firebase Realtime Database 實現收藏功能。
 
 ## 核心功能
 
@@ -58,4 +58,4 @@
 #### API
 
 - Pexels : [API文檔連結](https://www.pexels.com/zh-tw/api/documentation/?language=javascript#photos-curated) (每一小時的請求上限為200次，超過會暫時無法請求，還請多多見諒)
-- JSON Server : [API連結](https://my-json-server.typicode.com/doublesung/photoshare)
+- Firebase Realtime Database 
