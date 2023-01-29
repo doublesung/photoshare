@@ -42,7 +42,7 @@
 
 #### 框架
 
-- Vue Cli
+- Vue Cli (Vue 2)
 - Vue Router
 - Vuex
 - vue-infinite-scroll
@@ -54,8 +54,8 @@
 - Animate.css : 添加動態效果
 - Bootstrap 5 : 刻出版面並且製作 RWD 響應式網頁
 - Axios : 完成 Ajax 請求
+- Firebase Realtime Database : 實現收藏功能
 
 #### API
 
 - Pexels : [API文檔連結](https://www.pexels.com/zh-tw/api/documentation/?language=javascript#photos-curated) (每一小時的請求上限為200次，超過會暫時無法請求，還請多多見諒)
-- Firebase Realtime Database : 實現收藏功能
