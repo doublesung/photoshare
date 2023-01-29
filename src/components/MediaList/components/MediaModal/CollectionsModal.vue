@@ -200,7 +200,11 @@ export default {
     }
   },
   computed: {
-     ...mapState(['collections'])
+     ...mapState(['collections']),
+
+    isCollection() {
+      return this.$route.path.includes('collections')
+    }
   },
   data() {
     return {
@@ -236,7 +240,7 @@ export default {
 
       const mediumKey = Object.entries(collection.media).reverse().find((item, index) => {
         if (item[1].id == this.medium.id) {
-          this.$store.state.media.splice(index, 1)[0]
+          if(this.isCollection) this.$store.state.media.splice(index, 1)[0]
           return item
         }
       })
