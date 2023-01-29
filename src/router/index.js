@@ -36,8 +36,15 @@ export default new VueRouter({
       component: Collections,
     },
     {
-      path: '/collections/:collectionName',
+      path: '/collections/:id',
       component: Collection
+    },
+    {
+      path: '/collections/featured/:id',
+      component: Collection,
+      meta: { 
+        isFeatured: true
+      }
     }
   ]
 })

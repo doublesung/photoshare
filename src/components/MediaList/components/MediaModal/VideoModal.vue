@@ -1,8 +1,14 @@
 <template>
   <div class="modal full-height-modal fade" id="photoModal" tabindex="-1" aria-hidden="true">
     <!-- 關閉 -->
-    <button class="close-svg-icon border-0 bg-transparent position-absolute top-0 end-0 m-3 d-none d-md-block" 
-    data-bs-dismiss="modal" aria-label="Close" type="button"
+    <button 
+      class="
+        close-svg-icon border-0 bg-transparent position-absolute 
+        top-0 end-0 m-3 d-none d-md-block
+      " 
+      data-bs-dismiss="modal" 
+      aria-label="Close" 
+      type="button"
     >
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32">
         <path fill="none" d="M0 0h24v24H0z"/>
@@ -10,9 +16,19 @@
       </svg>
     </button>
     <div class="modal-dialog h-100 rounded-0 my-0 border-0 m-sm-auto m-0 min-w-md-80 min-w-100">
-      <div class="modal-content full-height-modal-content h-100 d-flex justify-content-between align-items-center p-4">
+      <div 
+        class="
+          modal-content full-height-modal-content h-100 d-flex 
+          justify-content-between align-items-center p-4
+        "
+      >
         <!-- 攝影師&收集&下載 -->
-        <div class="d-flex justify-content-md-between justify-content-center align-items-center w-100">
+        <div 
+          class="
+            d-flex justify-content-md-between justify-content-center 
+            align-items-center w-100
+          "
+        >
           <!-- 攝影師 -->
           <div class="d-flex align-items-center">
             <i class="svg-icon me-2">
@@ -21,12 +37,17 @@
                 <path d="M12 2c5.52 0 10 4.48 10 10s-4.48 10-10 10S2 17.52 2 12 6.48 2 12 2zM6.023 15.416C7.491 17.606 9.695 19 12.16 19c2.464 0 4.669-1.393 6.136-3.584A8.968 8.968 0 0 0 12.16 13a8.968 8.968 0 0 0-6.137 2.416zM12 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
               </svg>
             </i>
-            <span class="d-none d-md-block">{{video.user.name}}</span>
+            <span class="d-none d-md-block">{{ video.user.name }}</span>
           </div>
           <div class="d-flex">
             <!-- 收集 -->
-            <button class="border border-1 text-primary rounded-4 px-3 py-2 mx-3 d-flex align-items-center" 
-            type="button" @click="showCollectionsModal"
+            <button 
+              class="
+                border border-1 text-primary rounded-4 
+                px-3 py-2 mx-3 d-flex align-items-center
+              " 
+              type="button" 
+              @click="showCollectionsModal"
             >
               <i class="svg-icon me-0 me-md-1 d-flex align-items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -38,10 +59,25 @@
             </button>
             <!-- 下載 -->
             <div class="border-0 px-0 d-flex rounded-4 overflow-hidden">
-              <button class="btn btn-secondary text-white border-end rounded-0 border border-0 shadow-none">免費下載</button>
-              <button class="btn btn-secondary rounded-0 p-1 dropdown-toggle-split border border-0 shadow-none" 
-              id="dropdownBtnQuality" type="button" data-bs-toggle="dropdown" data-bs-offset="0,10" data-bs-auto-close="outside" 
-              aria-expanded="false"
+              <button 
+                class="
+                  btn btn-secondary text-white border-end 
+                  rounded-0 border border-0 shadow-none
+                "
+              >
+                免費下載
+              </button>
+              <button 
+                class="
+                  btn btn-secondary rounded-0 p-1 dropdown-toggle-split 
+                  border border-0 shadow-none
+                " 
+                id="dropdownBtnQuality" 
+                type="button" 
+                data-bs-toggle="dropdown" 
+                data-bs-offset="0,10" 
+                data-bs-auto-close="outside" 
+                aria-expanded="false"
               >
                 <i class="download-svg-icon h-100 px-1 d-flex align-items-center">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
@@ -50,19 +86,32 @@
                   </svg>
                 </i>
               </button>
-              <ul id="dropdownMenuSize" class="dropdown-menu dropdown-menu-end py-2" aria-labelledby="dropdownBtnQuality">
+              <ul 
+                id="dropdownMenuSize" 
+                class="dropdown-menu dropdown-menu-end py-2" 
+                aria-labelledby="dropdownBtnQuality"
+              >
                 <li>
                   <span class="dropdown-item bg-transparent text-primary">選擇尺寸:</span>
                 </li>
                 <li v-for="(sizeItem, index) in videoSizeArr" :key="index">
-                  <div class="dropdown-item bg-transparent text-dark d-flex align-items-center item-active" type="button"
-                  @click="currentSizeIndex = index"
+                  <div 
+                    class="dropdown-item bg-transparent text-dark d-flex align-items-center item-active" 
+                    type="button"
+                    @click="currentSizeIndex = index"
                   >
-                    <span>{{sizeItem.quality}}</span>
-                    <span class="text-primary ms-1 me-2">{{sizeItem.width}} x {{sizeItem.height}}</span>
+                    <span>{{ sizeItem.quality }}</span> 
+                    <span class="text-primary ms-1 me-2">
+                      {{ sizeItem.width }} x {{ sizeItem.height }}
+                    </span>
                     <i class="position-relative p-3">
-                      <svg v-if="currentSizeIndex === index" class="position-absolute top-50 end-0 translate-middle-y"
-                      xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
+                      <svg 
+                        v-if="currentSizeIndex === index" 
+                        class="position-absolute top-50 end-0 translate-middle-y"
+                        xmlns="http://www.w3.org/2000/svg" 
+                        viewBox="0 0 24 24" 
+                        width="24"
+                        height="24"
                       >
                         <path fill="none" d="M0 0h24v24H0z"/>
                         <path d="M10 15.172l9.192-9.193 1.415 1.414L10 18l-6.364-6.364 1.414-1.414z"/>
@@ -71,7 +120,11 @@
                   </div>
                 </li>
                 <li class="bg-transparent d-flex justify-content-center border-top mt-2">
-                  <button class="btn btn-secondary text-white mt-2 rounded-4" type="button" @click="downloadVideo">
+                  <button 
+                    class="btn btn-secondary text-white mt-2 rounded-4" 
+                    type="button" 
+                    @click="downloadVideo"
+                  >
                     下載選擇的收藏
                   </button>
                 </li>
@@ -79,8 +132,14 @@
             </div>
           </div>
           <!-- 關閉 -->
-          <button type="button" class="close-svg-icon-md border-0 bg-transparent position-absolute 
-          top-0 end-0 m-1 d-block d-md-none" data-bs-dismiss="modal" aria-label="Close"
+          <button 
+            type="button" 
+            class="
+              close-svg-icon-md border-0 bg-transparent position-absolute 
+              top-0 end-0 m-1 d-block d-md-none
+            " 
+            data-bs-dismiss="modal" 
+            aria-label="Close"
           >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
               <path fill="none" d="M0 0h24v24H0z"/>
@@ -105,7 +164,10 @@
             </i>
             <span class="text-primary fw-normal">免費使用</span>
           </div>
-          <button class="border border-1 text-primary rounded-4 px-3 py-2 d-flex align-items-center" type="button">
+          <button 
+            class="border border-1 text-primary rounded-4 px-3 py-2 d-flex align-items-center" 
+            type="button"
+          >
             <i class="svg-icon me-1 d-flex align-items-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                 <path fill="none" d="M0 0h24v24H0z"/>
@@ -144,12 +206,10 @@ export default {
   },
   methods: {
     // 影片尺寸升序排列
-    videoSizeArrange() {
-      let videoArr = this.video.video_files
+    orderVideoSize() {
+      const videoArr = this.video.video_files
 
-      let newVideoArr = videoArr.sort(function(a, b) {
-        return a.width - b.width
-      });
+      const newVideoArr = videoArr.sort((a, b) => a.width - b.width)
 
       this.videoSizeArr = newVideoArr
 
@@ -161,24 +221,24 @@ export default {
     },
     // 下載影片
     downloadVideo() {
-      let videoFile = this.videoSizeArr[this.currentSizeIndex]
+      const videoFile = this.videoSizeArr[this.currentSizeIndex]
 
-      let url = videoFile.link
-      let id = this.video.user.id
-      let photographer = this.video.user.name.replace(' ', '-')
+      const url = videoFile.link
+      const id = this.video.user.id
+      const photographer = this.video.user.name.replace(' ', '-')
 
-      let videoName = 'photoshare' + '-' + photographer + '-' + id + '.mp4'
+      const videoName = 'photoshare' + '-' + photographer + '-' + id + '.mp4'
 
       this.$emit('download', url, videoName)
     }
   },
   mounted() {
-    this.videoSizeArrange()
-  },
+    this.orderVideoSize()
+  }
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .close-svg-icon {
   fill: rgba($color: #FFF, $alpha: .9);
 }

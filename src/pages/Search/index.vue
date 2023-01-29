@@ -1,15 +1,19 @@
 <template>
   <div class="container-fluid px-3 px-lg-5 pt-7">
     <div class="d-flex flex-column align-items-center">
-      <h1 class="">與「{{searchQuery}}」相關的{{isPhoto ? '照片' : '影片'}}</h1>
-      <h5 :class="{'opacity-0': showTotalResult}" class="mt-3">找到{{totalResult}}個搜尋結果</h5>
+      <h1>與「{{ searchQuery }}」相關的{{ isPhoto ? '照片' : '影片' }}</h1>
+      <h5 class="mt-3">
+        找到{{ totalResult ? totalResult : 0 }}個搜尋結果
+      </h5>
       <!-- 頁面切換 -->
       <ul class="nav position-relative d-flex justify-content-center w-100">
         <div class="d-flex justify-content-center col-12 my-4 my-lg-5">
         <li class="nav-item">
-          <router-link :to="{path: '/search/' + searchQuery}" class="nav-link">
-            <button class="btn border-0 shadow-none rounded-4 fw-bold fs-4 px-3" type="button"
-            :class="photoBtnClass" 
+          <router-link :to="{ path: '/search/' + searchQuery }" class="nav-link">
+            <button 
+              class="btn border-0 shadow-none rounded-4 fw-bold fs-4 px-3" 
+              :class="photoBtnClass" 
+              type="button"
             >
               相片
             </button>
@@ -17,8 +21,10 @@
         </li>
         <li class="nav-item">
           <router-link :to="{path: '/search/video/' + searchQuery}" class="nav-link fs-4">
-            <button class="btn border-0 shadow-none rounded-4 fw-bold fs-4 px-3" type="button"
-            :class="videoBtnClass" 
+            <button 
+              class="btn border-0 shadow-none rounded-4 fw-bold fs-4 px-3" 
+              :class="videoBtnClass" 
+              type="button"
             >
               影片
             </button>
@@ -26,15 +32,35 @@
         </li>
         </div>
         <li class="nav-item position-lg-absolute d-flex align-items-center end-0 w-100 w-lg-auto h-100 mb-4">
-          <button class="border border-1 text-primary rounded-4 w-100 px-3 py-2 d-flex align-items-center" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" 
-          aria-expanded="false" aria-controls="directionCollapse sizeCollapse colorCollapse">
+          <button 
+            class="border text-primary w-100 px-3 py-2 d-flex align-items-center" 
+            :class="filterConditionNumber ? 'button-rounded-start border-end-0' : 'rounded-4'"
+            type="button" 
+            data-bs-toggle="collapse" 
+            data-bs-target=".multi-collapse" 
+            aria-expanded="false" 
+            aria-controls="directionCollapse sizeCollapse colorCollapse" 
+            style="transition:none"
+          >
             <i class="svg-icon d-flex align-items-center">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
                 <path fill="none" d="M0 0H24V24H0z"/>
                 <path d="M21 4v2h-1l-5 7.5V22H9v-8.5L4 6H3V4h18zM6.404 6L11 12.894V20h2v-7.106L17.596 6H6.404z"/>
               </svg>
             </i>
-            <span class="ps-1">篩選</span>
+            <span class="ps-1">
+              篩選
+              <template v-if="filterConditionNumber">({{ filterConditionNumber }})</template>
+            </span>
+          </button>
+          <button 
+            v-if="filterConditionNumber"
+            type="button" 
+            class="border text-primary p-2 border-start d-flex align-items-center" 
+            style="border-radius: 0 1rem 1rem 0;"
+            @click="resetFilterCondition"
+          >
+            <i class="ri-close-line fs-5" style="line-height: 24px; vertical-align: middle"></i>
           </button>
         </li>
       </ul>
@@ -45,12 +71,22 @@
       <div class="col-lg-4 col-12">
         <div class="collapse multi-collapse" id="directionCollapse">
           <div class="dropdown pb-4">
-            <button class="bg-transparent border border-1 text-primary rounded-4 text-start w-100 py-2 px-4" type="button" id="directionCollapseButton" data-bs-toggle="dropdown" data-bs-offset="0,10" aria-expanded="false">
-              {{currentDirection.text}}
+            <button 
+              class="bg-transparent border border-1 text-primary rounded-4 text-start w-100 py-2 px-4" 
+              type="button" 
+              id="directionCollapseButton" 
+              data-bs-toggle="dropdown" 
+              data-bs-offset="0,10" 
+              aria-expanded="false"
+            >
+              {{ currentDirection.text }}
             </button>
             <ul class="dropdown-menu w-100 rounded-4" aria-labelledby="directionCollapseButton">
               <li v-for="(direction, index) in directions" :key="index">
-                <button class="bg-transparent border-0 text-primary text-start w-100 py-2 px-4" @click="searchDirection(direction)">
+                <button 
+                  class="bg-transparent border-0 text-primary text-start w-100 py-2 px-4" 
+                  @click="searchDirection(direction)"
+                >
                   {{direction.text}}
                 </button>
               </li>
@@ -62,12 +98,22 @@
       <div class="col-lg-4 col-12">
         <div class="collapse multi-collapse" id="sizeCollapse">
           <div class="dropdown pb-4">
-            <button class="bg-transparent border border-1 text-primary rounded-4 text-start w-100 py-2 px-4" type="button" id="sizeCollapseButton" data-bs-toggle="dropdown" data-bs-offset="0,10" aria-expanded="false">
-              {{currnetSize.text}}
+            <button 
+              class="bg-transparent border border-1 text-primary rounded-4 text-start w-100 py-2 px-4" 
+              type="button" 
+              id="sizeCollapseButton" 
+              data-bs-toggle="dropdown" 
+              data-bs-offset="0,10" 
+              aria-expanded="false"
+            >
+              {{ currnetSize.text }}
             </button>
             <ul class="dropdown-menu w-100 rounded-4" aria-labelledby="sizeCollapseButton">
               <li v-for="(size, index) in sizes" :key="index">
-                <button class="bg-transparent border-0 text-primary text-start w-100 py-2 px-4" @click="searchSize(size)">
+                <button 
+                  class="bg-transparent border-0 text-primary text-start w-100 py-2 px-4" 
+                  @click="searchSize(size)"
+                >
                   {{size.text}}
                 </button>
               </li>
@@ -79,17 +125,31 @@
       <div class="col-lg-4 col-12">
         <div v-show="isPhoto" class="color-collapse collapse multi-collapse" id="colorCollapse">
           <div class="dropdown pb-4">
-            <div class="d-flex align-items-center border border-1 rounded-4 ps-4 p-2" id="colorCollapseButton" data-bs-toggle="dropdown" data-bs-offset="0,10" aria-expanded="false">
-              <div class="color-show me-2 rounded-circle" :style="{backgroundColor: hexBgColor}"></div>
+            <div 
+              class="d-flex align-items-center border border-1 rounded-4 ps-4 p-2" 
+              id="colorCollapseButton" 
+              data-bs-toggle="dropdown" 
+              data-bs-offset="0,10" 
+              aria-expanded="false"
+            >
+              <div class="color-show me-2 rounded-circle" :style="{ backgroundColor: hexBgColor }"></div>
               <span class="text-primary me-1">#</span>
-              <input class="color-input bg-transparent border-0 text-primary rounded-4 text-start w-100" type="text" 
-              placeholder="輸入 HEX 色碼" maxlength="6" v-model="currentColor"
-              @keydown.enter="searchColor($event, '')" 
+              <input 
+                class="color-input bg-transparent border-0 text-primary rounded-4 text-start w-100" 
+                type="text" 
+                placeholder="輸入 HEX 色碼" 
+                maxlength="6" 
+                v-model="currentColor"
+                @keydown.enter="searchColor($event, '')" 
               >
               <div class="dropdown-menu w-100 rounded-4" aria-labelledby="colorCollapseButton">
                 <ul class="dropdown-color-menu d-flex flex-wrap  px-4 my-3 w-100">
-                  <li class="col-2" v-for="(color, index) in colors" :key="index"
-                  :style="{'background-color': color}" @click="searchColor($event, color)"
+                  <li 
+                    class="col-2" 
+                    v-for="(color, index) in colors" 
+                    :key="index"
+                    :style="{'background-color': color}" 
+                    @click="searchColor($event, color)"
                   >
                   </li>
                 </ul>
@@ -104,9 +164,9 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import {Dropdown} from 'bootstrap'
-import MediaList from '../components/MediaList.vue'
+import { mapState } from 'vuex'
+import { Dropdown } from 'bootstrap'
+import MediaList from '../../components/MediaList'
 
 export default {
   name: 'Search',
@@ -137,12 +197,8 @@ export default {
         return 'text-primary'
       }
     },
-    showTotalResult() {
-      if(this.totalResult === '') {
-        return true
-      }else {
-        return false
-      }
+    filterConditionNumber() {
+      return Object.values(this.filterCondition).filter(item => item).length
     }
   },
   data() {
@@ -224,10 +280,32 @@ export default {
         '#3D5309',
         '#161616',
       ],
-      hexBgColor: '',
+      hexBgColor: ''
     }
   },
   methods: {
+    // 重置篩選條件
+    resetFilterCondition() {
+      this.filterCondition = {
+        orientation: '',
+        size: '',
+        color: ''
+      }
+
+      this.currentDirection = {
+        text: '所有方向',
+        value: 'allDirection'
+      }
+
+      this.currnetSize = {
+        text: '所有尺寸',
+        value: 'allSize'
+      }
+
+      this.currentColor = ''
+
+      this.reload()
+    },
     // 方向過濾搜尋
     searchDirection(direction) {
       if(this.currentDirection.value !== direction.value) {
@@ -327,7 +405,8 @@ export default {
       grid.style.height = 0
 
       this.$refs.mediaList.noMore = false
-      this.$store.dispatch('setTotalResult', '')
+      this.$refs.mediaList.loadingTop = '0px'
+      this.$store.dispatch('setTotalResult', null)
       this.$refs.mediaList.loadMore()
     }
   }, 
@@ -345,13 +424,11 @@ export default {
     searchQuery() {
       this.reload()
     }
-  },
-  mounted() {
-  },
+  }
 }
 </script>
 
-<style scped lang='scss'>
+<style scped lang="scss">
 ul.dropdown-menu {
   li {
     list-style-type: none;
@@ -360,6 +437,10 @@ ul.dropdown-menu {
       background-color: rgba($color: #6c757d, $alpha: .1);
     }
   }
+}
+
+.button-rounded-start {
+  border-radius: 1rem 0 0 1rem
 }
 
 .color-collapse {

@@ -5,16 +5,14 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint",
-    "mock": "json-server db.json --port 9090",
-    "mockdev": "concurrently \"npm run serve\" \"npm run mock\""
+    "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.6",
     "axios": "^0.27.2",
     "bootstrap": "^5.2.0",
-    "concurrently": "^7.4.0",
     "core-js": "^3.6.5",
+    "firebase": "^9.15.0",
     "imagesloaded": "^5.0.0",
     "masonry-layout": "^4.2.2",
     "node-sass": "^4.14.1",
@@ -30,7 +28,7 @@
     "@vue/cli-plugin-eslint": "~4.5.15",
     "@vue/cli-service": "~4.5.15",
     "babel-eslint": "^10.1.0",
-    "eslint": "^6.7.2",
+    "eslint": "^5.16.0",
     "eslint-plugin-vue": "^6.2.2",
     "sass-loader": "^7.3.1",
     "vue-template-compiler": "^2.6.11"

@@ -1,17 +1,30 @@
 <template>
-  <div class="modal center-modal fade rounded-4" id="collectionsModal" tabindex="-1" aria-hidden="true">
+  <div 
+    class="modal center-modal fade rounded-4" 
+    id="collectionsModal" 
+    tabindex="-1" 
+    aria-hidden="true"
+  >
     <div class="modal-dialog modal-dialog-centered" style="min-width: 30%">
       <div class="modal-content rounded-4">
         <div class="p-5">
           <!-- 關閉 -->
-          <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close">
-          </button>
+          <button 
+            type="button" 
+            class="btn-close position-absolute top-0 end-0 m-3" 
+            data-bs-dismiss="modal" 
+            aria-label="Close"></button>
           <div class="position-relative">
             <!-- 標題 -->
             <div class="d-flex flex-column align-items-center">
               <h5 class="modal-title text-center" id="exampleModalLabel">儲存置收藏</h5>
               <router-link to="/collections" class="fw-normal mb-4">
-                <div type="button" data-bs-dismiss="modal" aria-label="Close" @click="closeMediumModal">
+                <div 
+                  type="button" 
+                  data-bs-dismiss="modal" 
+                  aria-label="Close" 
+                  @click="closeMediumModal"
+                >
                   我的收藏
                 </div>
               </router-link>
@@ -21,10 +34,25 @@
               <div class="d-flex flex-wrap mn-2">
                 <!-- 新增收藏 -->
                 <div class="col-4 position-relative p-2 fw-normal">
-                  <div type="button" data-bs-dismiss="modal" aria-label="Close" @click="showAddCollectionsModal">
+                  <div 
+                    type="button" 
+                    data-bs-dismiss="modal" 
+                    aria-label="Close" 
+                    @click="showCollectionsModalAdd"
+                  >
                     <div class="item-placeholder mb-2">
-                      <div class="item bg-primary bg-opacity-10 d-flex justify-content-center align-items-center rounded-4">
-                        <div class="overlay rounded-4 d-flex justify-content-center align-items-center">
+                      <div 
+                        class="
+                          item bg-primary bg-opacity-10 d-flex 
+                          justify-content-center align-items-center rounded-4
+                        "
+                      >
+                        <div 
+                          class="
+                            overlay rounded-4 d-flex 
+                            justify-content-center align-items-center
+                          "
+                        >
                           <i class="add-icon ri-add-circle-line fs-1"></i>
                         </div>
                       </div>
@@ -33,39 +61,73 @@
                   </div>
                 </div>
                 <!-- 收藏清單 -->
-                <div class="col-4 position-relative p-2 fw-normal" v-for="(collection, index) in collections" :key="index">
+                <div 
+                  class="col-4 position-relative p-2 fw-normal" 
+                  v-for="(collection, index) in collections" 
+                  :key="index"
+                >
                   <div type="button">
                     <!-- 收藏有相片或影片 -->
-                    <div v-if="collection.media.length" class="item-placeholder mb-2">
-                      <div class="item bg-secondary bg-opacity-10 d-flex justify-content-center align-items-center 
-                      overflow-hidden rounded-4"
+                    <div 
+                      v-if="getMediaArray(collection.media).length" 
+                      class="item-placeholder mb-2"
+                    >
+                      <div 
+                        class="
+                          item bg-secondary bg-opacity-10 d-flex justify-content-center 
+                          align-items-center overflow-hidden rounded-4
+                        "
                       >
-                        <img class="w-100 h-100" v-if="!collection.media[0].video_files"
-                        :src="collection.media[0].src.large" alt="" style="object-fit: cover"
+                        <img 
+                          v-if="!getMediaArray(collection.media)[0].video_files"
+                          class="w-100 h-100" 
+                          :src="getMediaArray(collection.media)[0].src.large" 
+                          alt="" 
+                          style="object-fit: cover"
                         >
-                        <img class="w-100 h-100" v-else-if="collection.media[0].video_files"
-                        :src="collection.media[0].image" alt="" style="object-fit: cover"
+                        <img 
+                          v-else
+                          class="w-100 h-100" 
+                          :src="getMediaArray(collection.media)[0].image" 
+                          alt="" 
+                          style="object-fit: cover"
                         >
                         <!-- 沒被收藏 -->
-                        <div v-show="isCollected(collection.media)" @click="addMedium(collection)"
-                        class="overlay rounded-4 d-flex justify-content-center align-items-center">
+                        <div 
+                          v-show="isCollected(collection.media)" 
+                          @click="addMedium(collection)"
+                          class="overlay rounded-4 d-flex justify-content-center align-items-center"
+                        >
                           <i class="image-add-icon ri-add-circle-fill fs-1"></i>
                         </div>
                         <!-- 有被收藏 -->
                         <div v-if="isCollected(collection.media)" @click="deleteMedium(collection)">
-                          <div class="overlay-check rounded-4 d-flex justify-content-center align-items-center">
+                          <div 
+                            class="
+                              overlay-check rounded-4 d-flex 
+                              justify-content-center align-items-center
+                            "
+                          >
                             <i class="image-check-icon ri-checkbox-circle-fill fs-1"></i>
                           </div>
-                          <div class="overlay-delete rounded-4 d-flex justify-content-center align-items-center">
+                          <div 
+                            class="
+                              overlay-delete rounded-4 d-flex 
+                              justify-content-center align-items-center
+                            "
+                          >
                             <i class="image-delete-icon ri-close-circle-fill fs-1"></i>
                           </div>
                         </div>
                       </div>
                     </div>
                     <!-- 收藏無任何相片或影片 -->
-                    <div v-if="!collection.media.length" class="item-placeholder mb-2">
-                      <div class="item bg-primary bg-opacity-10 d-flex justify-content-center align-items-center 
-                      overflow-hidden rounded-4"
+                    <div v-else class="item-placeholder mb-2">
+                      <div 
+                        class="
+                          item bg-primary bg-opacity-10 d-flex justify-content-center 
+                          align-items-center overflow-hidden rounded-4
+                        "
                       >
                         <i class="svg-icon">
                           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50" height="50">
@@ -74,22 +136,38 @@
                           </svg>
                         </i>
                         <!-- 沒被收藏 -->
-                        <div v-show="isCollected(collection.media)" @click="addMedium(collection)"
-                        class="overlay rounded-4 d-flex justify-content-center align-items-center">
+                        <div 
+                          v-show="isCollected(collection.media)" 
+                          class="overlay rounded-4 d-flex justify-content-center align-items-center"
+                          @click="addMedium(collection)"
+                        >
                           <i class="image-add-icon ri-add-circle-fill fs-1"></i>
                         </div>
                         <!-- 有被收藏 -->
-                        <div v-if="isCollected(collection.media)" @click="deleteMedium(collection)">
-                          <div class="overlay-check rounded-4 d-flex justify-content-center align-items-center">
+                        <div 
+                          v-if="isCollected(collection.media)" 
+                          @click="deleteMedium(collection, index)"
+                        >
+                          <div 
+                            class="
+                              overlay-check rounded-4 d-flex 
+                              justify-content-center align-items-center
+                            "
+                          >
                             <i class="image-check-icon ri-checkbox-circle-fill fs-1"></i>
                           </div>
-                          <div class="overlay-delete rounded-4 d-flex justify-content-center align-items-center">
+                          <div 
+                            class="
+                              overlay-delete rounded-4 d-flex 
+                              justify-content-center align-items-center
+                            "
+                          >
                             <i class="image-delete-icon ri-close-circle-fill fs-1"></i>
                           </div>
                         </div>
                       </div>
                     </div>
-                    <div class="text">{{collection.title}}</div>
+                    <div class="text">{{ collection.title }}</div>
                   </div>
                 </div>
               </div>
@@ -105,11 +183,11 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import {reqCollectionPatchPhoto} from '../../api/jsonServerAPI'
+import { mapState } from 'vuex'
+import { getDatabase, ref, remove, child, push, update } from 'firebase/database'
 
 export default {
-  name: 'collectionsModal',
+  name: 'CollectionsModal',
   props: {
     medium: {
       type: Object
@@ -117,9 +195,9 @@ export default {
     photoModal: {
       type: Object
     },
-    addCollectionsModal: {
+    collectionsModalAdd: {
       type: Object
-    },
+    }
   },
   computed: {
      ...mapState(['collections'])
@@ -131,37 +209,41 @@ export default {
   },
   methods: {
     // 顯示新增收藏
-    showAddCollectionsModal() {
-      this.addCollectionsModal.show()
+    showCollectionsModalAdd() {
+      this.collectionsModalAdd.show()
 
-      let addCollectionsModal = document.getElementById('addCollectionsModal')
-      let backdropArr = document.querySelectorAll('.modal-backdrop')
+      const collectionsModalAdd = document.getElementById('collectionsModalAdd')
+      const backdropArr = document.querySelectorAll('.modal-backdrop')
       // 先把偽數組變成真的Array對象 之後再取最後一個值
-      let backdrop = Array.prototype.slice.call(backdropArr).slice(-1)[0]
+      const backdrop = Array.prototype.slice.call(backdropArr).slice(-1)[0]
       // 調整z-index覆蓋住上一個modal
-      addCollectionsModal.style.zIndex = 1065
+      collectionsModalAdd.style.zIndex = 1065
       backdrop.style.zIndex = 1060
     },
     // 向收藏添加圖片或影片
-    async addMedium(collection) {
-      let id = collection.id
-      let media = collection.media
+    addMedium(collection) {
+      const db = getDatabase()
+      const path = `collections/${collection.id}/media`
+      const newKey = push(child(ref(db), path)).key
 
-      media.unshift(this.medium)
-
-      await reqCollectionPatchPhoto(id, media)
+      update(ref(db), {
+        [path + '/' + newKey]: this.medium
+      })
     },
     // 向收藏刪除圖片或影片
-    async deleteMedium(collection) {
-      let id = collection.id
-      let media = collection.media
-      let medium = this.medium
+    deleteMedium(collection) {
+      const db = getDatabase()
 
-      for (let i = 0; i < media.length; i++) {
-        if(medium.id === media[i].id) media.splice(i, 1)
-      }
-
-      await reqCollectionPatchPhoto(id, media)
+      const mediumKey = Object.entries(collection.media).reverse().find((item, index) => {
+        if (item[1].id == this.medium.id) {
+          this.$store.state.media.splice(index, 1)[0]
+          return item
+        }
+      })
+      
+      const path = `collections/${collection.id}/media/${mediumKey[0]}`
+      
+      remove(ref(db, path))
     },
     // 關閉相片資訊
     closeMediumModal() {
@@ -169,13 +251,12 @@ export default {
     },
     // 是否已被收藏
     isCollected(media) {
-      let medium = this.medium
-      
-      for (let i = 0; i < media.length; i++) {
-        if(medium.id === media[i].id) return true
+      if (media) {
+        return Object.values(media).find(item => item.id == this.medium.id)
       }
-      
-      return false
+    },
+    getMediaArray(media) {
+      return media ? Object.values(media) : []
     }
   },
   watch: {
@@ -186,11 +267,11 @@ export default {
   mounted() {
     // 獲取所有collection
     this.$store.dispatch('getCollections')
-  },
+  }
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .item-placeholder {
   position: relative;
   width: 100%;

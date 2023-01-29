@@ -21,10 +21,12 @@ export default function ajax(url = '', data = {}) {
       }  
     })
     .then(response => {
-      resolve(response.data)
+      resolve(response)
     })
     .catch(error => {
       reject(error)
     })
+  }).catch(error => {
+    return error
   })
 }

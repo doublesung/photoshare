@@ -1,28 +1,40 @@
 <template>
   <div>
     <!-- 相片資訊 -->
-    <PhotoModal v-if="!medium.video_files" :photo="medium" :showCollectionsModal="showCollectionsModal" 
-    @download="download"
+    <PhotoModal 
+      v-if="!medium.video_files" 
+      :photo="medium" 
+      :showCollectionsModal="showCollectionsModal" 
+      @download="download"
     />
     <!-- 影片資訊 -->
-    <VideoModal v-else-if="medium.video_files" :video="medium" :showCollectionsModal="showCollectionsModal"
-    @download="download"
+    <VideoModal 
+      v-else
+      :video="medium" 
+      :showCollectionsModal="showCollectionsModal"
+      @download="download"
     />
     <!-- 收藏清單 -->
-    <collectionsModal :medium="medium" :photoModal="photoModal" :addCollectionsModal="addCollectionsModal"/>
+    <CollectionsModal 
+      :medium="medium" 
+      :photoModal="photoModal" 
+      :collectionsModalAdd="collectionsModalAdd"
+    />
     <!-- 新增收藏 -->
-    <addCollectionsModal :photo="medium" :addCollectionsModal="addCollectionsModal" 
-    :showCollectionsModal="showCollectionsModal"
+    <CollectionsModalAdd 
+      :photo="medium" 
+      :collectionsModalAdd="collectionsModalAdd" 
+      :showCollectionsModal="showCollectionsModal"
     />
   </div>
 </template>
 
 <script>
-import {Modal} from 'bootstrap'
+import { Modal } from 'bootstrap'
 import PhotoModal from './PhotoModal.vue'
 import VideoModal from './VideoModal.vue'
-import collectionsModal from './collectionsModal.vue'
-import addCollectionsModal from './addCollectionsModal.vue'
+import CollectionsModal from './CollectionsModal.vue'
+import CollectionsModalAdd from './CollectionsModalAdd.vue'
 
 export default {
   name: 'PhotosModal',
@@ -32,19 +44,19 @@ export default {
     },
     downloadMedium: {
       type: Function
-    },
+    }
   },
   components: {
     PhotoModal,
     VideoModal,
-    collectionsModal,
-    addCollectionsModal
+    CollectionsModal,
+    CollectionsModalAdd
   },
   data() {
     return {
       photoModal: null,
       collectionsModal: null,
-      addCollectionsModal: null,
+      collectionsModalAdd: null
     }
   },
   methods: {
@@ -52,7 +64,7 @@ export default {
     modalObject() {
       this.photoModal = new Modal(document.getElementById('photoModal'))
       this.collectionsModal = new Modal(document.getElementById('collectionsModal'))
-      this.addCollectionsModal = new Modal(document.getElementById('addCollectionsModal'))
+      this.collectionsModalAdd = new Modal(document.getElementById('collectionsModalAdd'))
     },
     // 關閉相片資訊
     closeMediumModal() {
@@ -61,42 +73,46 @@ export default {
     // 監聽Modal關閉事件
     watchCloseMediumModal() {
       const photoModal = document.getElementById('photoModal')
+
       // 清除medium的值
       photoModal.addEventListener('hidden.bs.modal', () => {
         this.$emit('goClearMedium')
       })
 
       const collectionsModal = document.getElementById('collectionsModal')
-      // photoModal跟addCollectionsModal都已關閉 才會清除medium的值
+
+      // photoModal跟collectionsModalAdd都已關閉 才會清除medium的值
       collectionsModal.addEventListener('hidden.bs.modal', () => {
         const photoModalDisplay = photoModal.style.display
-        const addCollectionsModalDisplay = addCollectionsModal.style.display
+        const collectionsModalAddDisplay = collectionsModalAdd.style.display
 
-        if(!photoModalDisplay && !addCollectionsModalDisplay) this.$emit('goClearMedium')
+        if (!photoModalDisplay && !collectionsModalAddDisplay) this.$emit('goClearMedium')
       })
 
-      const addCollectionsModal = document.getElementById('addCollectionsModal')
+      const collectionsModalAdd = document.getElementById('collectionsModalAdd')
+
       // photoModal跟collectionsModal都已關閉 才會清除medium的值
-      addCollectionsModal.addEventListener('hidden.bs.modal', () => {
+      collectionsModalAdd.addEventListener('hidden.bs.modal', () => {
         const photoModalDisplay = photoModal.style.display
         const collectionsModalDisplay = collectionsModal.style.display !== 'none' 
 
-        if(!photoModalDisplay && !collectionsModalDisplay) this.$emit('goClearMedium')
+        if (!photoModalDisplay && !collectionsModalDisplay) this.$emit('goClearMedium')
       })
     },
     // 關閉尺寸下拉表單
     closeDropdownMenuSize() {
-      let menu = document.getElementById('dropdownMenuSize')
+      const menu = document.getElementById('dropdownMenuSize')
+
       menu.classList.remove('show')
     },
     // 顯示收藏清單
     showCollectionsModal() {  
-      this.collectionsModal.show();
+      this.collectionsModal.show()
 
-      let collectionsModal = document.getElementById('collectionsModal')
-      let backdropArr = document.querySelectorAll('.modal-backdrop')
+      const collectionsModal = document.getElementById('collectionsModal')
+      const backdropArr = document.querySelectorAll('.modal-backdrop')
       // 先把偽數組變成真的Array對象 之後再取最後一個值
-      let backdrop = Array.prototype.slice.call(backdropArr).slice(-1)[0]
+      const backdrop = Array.prototype.slice.call(backdropArr).slice(-1)[0]
       // 調整z-index覆蓋住上一個modal
       collectionsModal.style.zIndex = 1065
       backdrop.style.zIndex = 1060
@@ -114,7 +130,7 @@ export default {
 }
 </script>
 
-<style scoped lang='scss'>
+<style scoped lang="scss">
 .close-svg-icon {
   fill: rgba($color: #FFF, $alpha: .9);
 }

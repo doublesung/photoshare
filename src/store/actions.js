@@ -5,15 +5,9 @@ import {
   reqFeaturedVideos,
   reqFeaturedCollections,
   reqCollectionPexel
-} from '../api/pexelAPI'
+} from '../api'
 
-import {
-  reqCollections,
-  reqCollectionJsonSever,
-  reqSearchRecords,
-  reqPhotoCover,
-  reqVideoCover
-} from '../api/jsonServerAPI'
+import { getDatabase, ref, child, get, onValue } from 'firebase/database'
 
 export default {
   // pexel
@@ -29,7 +23,7 @@ export default {
   },
   async getFeaturedCollections(contest, value) {
     const result = await reqFeaturedCollections(value)
-    const featuredCollections = result.collections
+    const featuredCollections = result.data.collections
 
     contest.commit('RECEIVE_FEATUREDCOLLECTIONS', featuredCollections)
   },
@@ -43,39 +37,71 @@ export default {
 
     contest.commit('RECEIVE_SEARCHVIDEOS', result)
   },
-  async getCollectionPexel(contest, value) {
-    const result = await reqCollectionPexel(value)
+  async getCollectionPexel(contest, { id, page, collection }) {
+    const result = await reqCollectionPexel(id, page)
 
-    contest.commit('RECEIVE_COLLECTION_PEXEL', result)
+    contest.commit('RECEIVE_COLLECTION_PEXEL', { 
+      result: result.data,
+      collection
+    })
   },
 
-  // json-server
-  async getCollections(contest, value) {
-    const collections = await reqCollections(value)
+  // firebase
+  getCover(contest, { id, path }) {
+    const dbRef = ref(getDatabase())
 
-    contest.commit('RECEIVE_COLLECTIONS', collections)
+    get(child(dbRef, path + '/' + id )).then(snapshot => {
+      if (snapshot.exists()) {
+        if (path === 'photoCovers') {
+          contest.commit('RECEIVE_PHOTOCOVER', snapshot.val())
+        } else {
+          contest.commit('RECEIVE_VIDEOCOVER', snapshot.val())
+        }
+      }
+    }).catch((error) => {
+      console.error(error)
+    })
   },
-  async getCollectionJsonSever(contest, value) {
-    const collection = await reqCollectionJsonSever(value)
-    
-    contest.commit('RECEIVE_COLLECTION_JSONSERVER', collection)
-  },
-  async getSearchRecords(contest, value) {
-    const searchRecords = await reqSearchRecords(value)
+  getSearchRecords(contest) {
+    const db = getDatabase()
+    const searchRecordsRef = ref(db, 'searchRecords')
 
-    contest.commit('RECEIVE_SEARCHRECORDS', searchRecords)
+    onValue(searchRecordsRef, snapshot => {
+      if (snapshot.exists()) {
+        contest.commit('RECEIVE_SEARCHRECORDS', snapshot.val())
+      } else {
+        contest.commit('RECEIVE_SEARCHRECORDS', [])
+      }
+    })
   },
-  async getPhotoCover(contest, value) {
-    const photoCover = await reqPhotoCover(value)
+  getCollections(contest) {
+    const db = getDatabase()
+    const searchRecordsRef = ref(db, 'collections')
 
-    contest.commit('RECEIVE_PHOTOCOVER', photoCover)
+    onValue(searchRecordsRef, snapshot => {
+      if (snapshot.exists()) {
+        const collections =  Object.values(snapshot.val()).reverse()
+
+        contest.commit('RECEIVE_COLLECTIONS', collections)
+      } else {
+        contest.commit('RECEIVE_COLLECTIONS', [])
+      }
+    })
   },
-  async getVideoCover(contest, value) {
-    const videoCover = await reqVideoCover(value)
+  getCollectionFirebase(contest, id) {
+    const dbRef = ref(getDatabase())
 
-    contest.commit('RECEIVE_VIDEOCOVER', videoCover)
+    get(child(dbRef, 'collections/' + id )).then(snapshot => {
+      if (snapshot.exists()) {
+        const collection = snapshot.val()
+
+        contest.commit('RECEIVE_COLLECTION_FIREBASE', collection)
+      }
+    }).catch((error) => {
+      console.error(error)
+    })
   },
-
+  
   // local
   setColletion(contest, newCollection) {
     contest.commit('NEW_COLLECTION', newCollection)

@@ -1,9 +1,12 @@
 <template>
   <div>
     <header class="position-relative">
-      <div class="header-image" :style="{backgroundImage: `url(${photoCover.url})`}"></div>
-      <div class="position-absolute top-50 start-50 translate-middle d-flex flex-column 
-      align-items-center text-white text-nowrap"
+      <div class="header-image" :style="{ backgroundImage: `url(${photoCover.url})` }"></div>
+      <div 
+        class="
+          position-absolute top-50 start-50 translate-middle d-flex 
+          flex-column align-items-center text-white text-nowrap
+        "
       >
         <h1>提供免費的照片及影片</h1>
         <h2>創作者分享的最優質圖庫</h2>
@@ -11,7 +14,7 @@
       <div class="position-absolute bottom-0 end-0 px-3 px-lg-5">
         <p class="text-white opacity-75">
           <span>攝影師:</span>
-          <span class="ms-2">{{photoCover.photographer}}</span>
+          <span class="ms-2">{{ photoCover.photographer }}</span>
         </p>
       </div>
     </header>
@@ -19,7 +22,10 @@
       <ul class="nav d-flex justify-content-center align-items-center my-4 my-lg-5">
         <li class="nav-item">
           <router-link to="/photos" class="nav-link">
-            <button class="btn btn-secondary text-white border-0 shadow-none rounded-4 fw-bold fs-4 px-3" type="button">
+            <button 
+              class="btn btn-secondary text-white border-0 shadow-none rounded-4 fw-bold fs-4 px-3" 
+              type="button"
+            >
               相片
             </button>
           </router-link>
@@ -39,8 +45,8 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import MediaList from '../components/MediaList.vue'
+import { mapState } from 'vuex'
+import MediaList from '../../components/MediaList'
 
 export default {
   name: 'Home',
@@ -58,20 +64,23 @@ export default {
   methods: {
     // 獲取封面
     getPhotoCover() {
-      let id = Math.floor(Math.random() * 3 + 1)
+      const id = Math.floor(Math.random() * 3 + 1)
       
-      this.$store.dispatch('getPhotoCover', id)
+      // this.$store.dispatch('getPhotoCover', id)
+      this.$store.dispatch('getCover', { 
+        id, 
+        path: 'photoCovers' 
+      })
     },
     // 獲取照片
     getMedia() {
       this.page++
-      this.$store.dispatch('getFeaturedPhotos', {page: this.page})
+      this.$store.dispatch('getFeaturedPhotos', { page: this.page })
     }
   },
   mounted() {
     this.getPhotoCover()
-  },
-  
+  }
 }
 </script>
 

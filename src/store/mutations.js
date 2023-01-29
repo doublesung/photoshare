@@ -1,42 +1,85 @@
 export default {
   // pexel
   RECEIVE_FEARTUREDPHOTOS(state, result) {
-    state.newMedia = result.photos
-    state.page = result.page
-    state.totalResult = result.total_results
+    if (result.status) {
+      state.newMedia = result.data.photos
+      state.page = result.data.page
+      state.totalResult = result.data.total_results
+      state.isOverLimitRequest = false
+      state.isRequestError = false
+    } else {
+      if (result.response.status == 429) {
+        state.isOverLimitRequest = true
+      } else {
+        state.isRequestError = true
+      }
+    }
   },
   RECEIVE_FEARTUREDVIDEOS(state, result) {
-    state.newMedia = result.videos
-    state.page = result.page
-    state.totalResult = result.total_results
+    if (result.status) {
+      state.newMedia = result.data.videos
+      state.page = result.data.page
+      state.totalResult = result.data.total_results
+      state.isOverLimitRequest = false
+      state.isRequestError = false
+    } else {
+      if (result.response.status == 429) {
+        state.isOverLimitRequest = true
+      } else {
+        state.isRequestError = true
+      }
+    }
   },
   RECEIVE_SEARCHPHOTOS(state, result) {
-    state.newMedia = result.photos
-    state.page = result.page
-    state.totalResult = result.total_results
+    if (result.status) {
+      state.newMedia = result.data.photos
+      state.page = result.data.page
+      state.totalResult = result.data.total_results
+    } else {
+      if (result.response.status == 429) {
+        state.isOverLimitRequest = true
+      } else {
+        state.isRequestError = true
+      }
+    }
   },
   RECEIVE_SEARCHVIDEOS(state, result) {
-    state.newMedia = result.videos
-    state.page = result.page
-    state.totalResult = result.total_results
+    if (result.status) {
+      state.newMedia = result.data.videos
+      state.page = result.data.page
+      state.totalResult = result.data.total_results
+    } else {
+      if (result.response.status == 429) {
+        state.isOverLimitRequest = true
+      } else {
+        state.isRequestError = true
+      }
+    }
   },
   RECEIVE_FEATUREDCOLLECTIONS(state, featuredCollections) {
     state.featuredCollections = featuredCollections
   },
-  RECEIVE_COLLECTION_PEXEL(state, result) {
+  RECEIVE_COLLECTION_PEXEL(state, { result, collection }) {
+    state.collection = collection
     state.newMedia = result.media
     state.totalResult = result.total_results
   },
   
 
-  // json-server
+  // firebase
   RECEIVE_COLLECTIONS(state, collections) {
     state.collections = collections
   },
-  RECEIVE_COLLECTION_JSONSERVER(state, collection) {
+  RECEIVE_COLLECTION_FIREBASE(state, collection) {
     state.collection = collection
-    state.newMedia = collection.media
-    state.totalResult = collection.media.length
+
+    if (collection.media) {
+      state.newMedia = Object.values(collection.media).reverse()
+      state.totalResult = Object.values(collection.media).length
+    } else {
+      state.newMedia = [],
+      state.totalResult = 0
+    }
   },
   RECEIVE_SEARCHRECORDS(state, searchRecords) {
     state.searchRecords = searchRecords

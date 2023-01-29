@@ -1,7 +1,6 @@
-import ajax from './pexelAjax'
+import ajax from './ajax'
 
 const baseURL = 'https://api.pexels.com'
-// const baseURL = '/apiDev'
 
 // 獲取精選相片
 export const reqFeaturedPhotos = (page) => ajax(baseURL + '/v1/curated', page)
@@ -20,7 +19,7 @@ export const reqSearchVideos = ({page, query, orientation, size}) => {
 }
 
 // 獲取收藏
-export const reqCollectionPexel = ({id, page}) => ajax(baseURL + `/v1/collections/${id}`, {page})
+export const reqCollectionPexel = (id, page) => ajax(baseURL + `/v1/collections/${id}`, {page})
 
 // 獲取精選收藏
 export const reqFeaturedCollections = ({page, per_page}) => ajax(baseURL + '/v1/collections/featured', {page, per_page})

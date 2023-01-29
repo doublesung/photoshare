@@ -1,8 +1,9 @@
 export default {
   page: '',
-  totalResult: '',
+  totalResult: null,
 
   newMedia: [],
+  media: [],
   medium: {},
 
   collections: [],
@@ -14,5 +15,8 @@ export default {
   featuredCollections: [],
 
   photoCover: '',
-  videoCover: ''
+  videoCover: '',
+
+  isOverLimitRequest: false,
+  isRequestError: false
 }

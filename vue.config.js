@@ -11,8 +11,8 @@ module.exports = {
         }
       },
       '/api': {
-        // target: 'http://localhost:9090',
-        target: 'https://my-json-server.typicode.com/doublesung/photoshare',
+        target: 'http://localhost:9090',
+        // target: 'https://my-json-server.typicode.com/doublesung/photoshare',
         changeOrigin: true,
         secure: false,
         pathRewrite: {
@@ -20,6 +20,7 @@ module.exports = {
         }
       }
     }
-  }
+  },
+  lintOnSave: false
 };
 
