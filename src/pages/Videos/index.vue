@@ -71,7 +71,6 @@ export default {
     getVideoCover() {
       const id = Math.floor(Math.random() * 3 + 1)
 
-      // this.$store.dispatch('getVideoCover', id)
       this.$store.dispatch('getCover', { 
         id, 
         path: 'videoCovers' 

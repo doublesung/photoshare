@@ -14,6 +14,7 @@
               class="btn border-0 shadow-none rounded-4 fw-bold fs-4 px-3" 
               :class="photoBtnClass" 
               type="button"
+              @click="resetFilterCondition(false)"
             >
               相片
             </button>
@@ -25,6 +26,7 @@
               class="btn border-0 shadow-none rounded-4 fw-bold fs-4 px-3" 
               :class="videoBtnClass" 
               type="button"
+              @click="resetFilterCondition(false)"
             >
               影片
             </button>
@@ -58,7 +60,7 @@
             type="button" 
             class="border text-primary p-2 border-start d-flex align-items-center" 
             style="border-radius: 0 1rem 1rem 0;"
-            @click="resetFilterCondition"
+            @click="resetFilterCondition(true)"
           >
             <i class="ri-close-line fs-5" style="line-height: 24px; vertical-align: middle"></i>
           </button>
@@ -199,6 +201,9 @@ export default {
     },
     filterConditionNumber() {
       return Object.values(this.filterCondition).filter(item => item).length
+    },
+    hexBgColor() {
+      return this.isHex() ? '#' + this.currentColor : ''
     }
   },
   data() {
@@ -279,13 +284,12 @@ export default {
         '#6A4000',
         '#3D5309',
         '#161616',
-      ],
-      hexBgColor: ''
+      ]
     }
   },
   methods: {
     // 重置篩選條件
-    resetFilterCondition() {
+    resetFilterCondition(isReset) {
       this.filterCondition = {
         orientation: '',
         size: '',
@@ -304,7 +308,7 @@ export default {
 
       this.currentColor = ''
 
-      this.reload()
+      if (isReset) this.resetData()
     },
     // 方向過濾搜尋
     searchDirection(direction) {
@@ -317,8 +321,7 @@ export default {
           this.filterCondition.orientation = direction.value
         }
 
-        // this.getMedia()
-        this.reload()
+        this.resetData()
       }
     },
     // 尺寸過濾搜尋
@@ -332,7 +335,7 @@ export default {
           this.filterCondition.size = size.value
         }
       
-        this.reload()
+        this.resetData()
       }
     },
     // 顏色過濾搜尋
@@ -352,7 +355,7 @@ export default {
       if(this.oldColor !== color && this.isHex()) {
         this.oldColor = color
         this.filterCondition.color = color.replace('#', '')
-        this.reload()
+        this.resetData()
       }
     },
     // 獲取相片或影片
@@ -362,9 +365,9 @@ export default {
     },
     // 是否為有效HEX色碼
     isHex() {
-      let color = '#' + this.currentColor
+      const color = '#' + this.currentColor
 
-      const newDiv = document.createElement("div");
+      const newDiv = document.createElement('div')
 
       document.body.appendChild(newDiv)
       newDiv.style.backgroundColor = color
@@ -391,38 +394,31 @@ export default {
         page: this.page,
         query: this.searchQuery,
         orientation : this.filterCondition.orientation,
-        size: this.filterCondition.size,
+        size: this.filterCondition.size
       })
     },
     // 重新加載資料
-    reload() {
-      this.page = 0
-      this.$refs.mediaList.media = []
-      this.$refs.mediaList.oldMediaLength = 0
-
-      let grid = document.querySelector('.grid')
+    resetData() {
+      const grid = document.querySelector('.grid')
       
       grid.style.height = 0
 
+      this.page = 0
+
+      this.$store.state.media = []
+      this.$store.state.totalResult = null
+      
       this.$refs.mediaList.noMore = false
       this.$refs.mediaList.loadingTop = '0px'
-      this.$store.dispatch('setTotalResult', null)
       this.$refs.mediaList.loadMore()
     }
   }, 
   watch: {
-    currentColor() {
-      if(this.isHex()) {
-        this.hexBgColor = '#' + this.currentColor
-      }else {
-        this.hexBgColor = ''
-      }
-    },
     isPhoto() {
-      this.reload()
+      this.resetData()
     },
     searchQuery() {
-      this.reload()
+      this.resetData()
     }
   }
 }

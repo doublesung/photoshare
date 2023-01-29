@@ -137,9 +137,13 @@ export default {
 
       if (searchRecordIndex !== -1) {
         this.searchRecords.splice(searchRecordIndex, 1)
-      } 
+      }
 
       this.searchRecords.unshift(this.searchValue)
+
+      if (this.searchRecords.length > 15) {
+        this.searchRecords.pop()
+      }
 
       const db = getDatabase()
 

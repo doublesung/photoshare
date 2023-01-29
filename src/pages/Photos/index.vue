@@ -66,7 +66,6 @@ export default {
     getPhotoCover() {
       const id = Math.floor(Math.random() * 3 + 1)
       
-      // this.$store.dispatch('getPhotoCover', id)
       this.$store.dispatch('getCover', { 
         id, 
         path: 'photoCovers' 
